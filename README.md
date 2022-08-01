@@ -1,1 +1,1 @@
-# AHS-Game-Dev-Club.github.io
+# AHS Game Development Club official website
