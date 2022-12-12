@@ -109,6 +109,89 @@
                     </div>
 
                     <div class="row">
+                        <p>We create a class FlappyController that extends from the Unity MonoBehaviour class. This
+                            allows us
+                            to connect the script to our Flappy Bird character sprite and its other components.</p>
+
+
+                        <h4>Program Structure</h4>
+                        <p>The Start() method is called on the first frame when the character is created.</p>
+                        <p>The Update() method is called every frame to perform various actions from calculating points,
+                            moving the character, getting input, etc.</p>
+                        <p>
+                            We declare the following fields:
+                        <pre><code class="language-csharp">Rigidbody2D rb;
+public float force;
+
+public Vector3 upRotation = new Vector3(0, 0, 22.171f);
+public Vector3 downRotation = new Vector3(0, 0, -35);</code></pre>
+                        </p>
+                        <p>Rigidbody2D, another component of the flappy bird, is obtained from by using
+                        <pre><code class="language-csharp">void Start()
+{
+    rb = gameObject.GetComponent&lt;Rigidbody2D&gt;();
+}</code></pre>
+                        in the Start() method. The Rigidbody2D component controls the bird movement and physics. We want
+                        to change this component's velocity and rotation depending on the bird's state and user input.
+                        </p>
+                        <p><em>IMPORTANT: Note the use of public fields. We can set these fields not through code,
+                                but in the
+                                Unity UI when editing the script. These essentially act as parameters to our
+                                script.</em></p>
+
+
+                        <h4>User Input and Update()</h4>
+                        <p>To get input, we use the Input class. For example, if we want to check if the space bar
+                            <em>every frame</em> was
+                            pressed, we would type:
+                        <pre><code class="language-csharp">if (Input.GetKeyDown(KeyCode.Space))
+{
+    // do something here
+}</code></pre>
+                        </p>
+
+                        <p>Or alternatively, if we wanted to check if any key was pressed, we could write:
+                        <pre><code class="language-csharp">if (Input.anyKeyDown)
+{
+    // do something here
+}</code></pre>
+                        </p>
+                        <p>If the user presses on a key, we want our bird to jump. We can do this by setting the
+                            velocity to face in the up direction. Conveniently Vector2.up already defines the up
+                            direction... So we can multiply rb.velocity by a certain force that we defined in earlier.
+                            We also want to change the bird's rotation. We will use Quaternions, which represent a 3D
+                            rotation, to do this, as seen below.
+                        <pre><code class="language-csharp">if (Input.anyKeyDown)
+{
+    rb.velocity = Vector2.up * force;
+    transform.rotation = Quaternion.Euler(upRotation);
+}</code></pre>
+                        </p>
+                        <p>Finally, we want the bird's rotation to also change every frame, so we use another math
+                            function: smooth interpolation (You do not need to worry about the implementation details)!
+                        </p>
+                        <pre><code class="language-csharp">void Update()
+{
+    if (Input.anyKeyDown)
+    {
+        rb.velocity = Vector2.up * force;
+        transform.rotation = Quaternion.Euler(upRotation);
+    }
+                                    
+    transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(downRotation), Time.deltaTime * 2);
+}</code></pre>
+                        <p>Another key takeaway from this piece code is Time.deltaTime, which gives you the elapsed time
+                            since the last frame. This is useful, to make sure the fast computers do not have a speed
+                            advantage over others! Here's an excellent <a
+                                href="https://www.youtube.com/watch?v=8pYq15Lh0x4" target="_blank">video</a> explaining
+                            it.</p>
+                        <p>Again do not worry about understanding Quaternions. Just know that they represent a 3D
+                            rotation. This is a very complicated university math
+                            topic!</p>
+                    </div>
+
+                    <div class="row">
+                        <p>Here's the final code in case you need it!</p>
                         <h4>FlappyController.cs</h4>
                         <pre><code class="language-csharp">using System.Collections;
 using System.Collections.Generic;

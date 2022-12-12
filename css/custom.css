@@ -11,3 +11,7 @@
 #about .message-body p {
     margin: 1.5em 0;
 }
+
+#code-walkthrough p {
+    margin: 20px 0;
+}
