@@ -85,7 +85,7 @@
                 <ul id="" class="nav navbar-nav">
                     <li><a href="./index.html">Home</a></li>
                     <li><a href="./lessons.html#csharp">C#</a></li>
-                    <li><a href="#code-walkthrough">Let's Make Flappy Bird</a></li>
+                    <li><a href="#unity-editor">Let's Make Flappy Bird</a></li>
                 </ul>
             </nav>
             <!-- /main nav -->
@@ -96,10 +96,61 @@
         ==================================== -->
 
     <main class="site-content" role="main">
-        <!--
-        End Home SliderEnd
-        ==================================== -->
-        <!-- C# section -->
+
+        <section>
+            <div class="container">
+                <div class="row">
+                    <div class="sec-title text-center">
+                        <h2 class="wow animated bounceInLeft">Our Repository</h2>
+                    </div>
+                    <p>Here's <em><a href="https://github.com/iamcheeze/AHS-GAMEDEV-FLAPPY-BIRD" target="_blank">our
+                                repository</a></em>. Feel
+                        free to clone it and open it in Unity!</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="unity-editor">
+            <div class="container">
+                <div class="row">
+                    <div class="sec-title text-center">
+                        <h2 class="wow animated bounceInLeft">Unity Editor</h2>
+
+                    </div>
+
+                    <div class="row">
+                        <h4>Scene Hierarchy</h4>
+                        <p>Here's the scene hierarchy! The Death Barriers are the top and bottom of scene, when the
+                            flappy bird player goes out of bounds. Make sure to add the "Death" tag to the Box Collider
+                            2D
+                            component.</p>
+                        <p>There are 3 Pipes which have 2 child pipes, the top and bottom one, also with the "Death"
+                            tag. Finally, the Cycle Completion Collider detects if the pipes have passed the screen on
+                            the left and
+                            respawn to their original point.</p>
+                        <img src="img/flappy/flappy_scene_hierarchy.png">
+                        <h4>Player</h4>
+                        <p>Here is the Inspector panel for the Player. Make sure to change the Sprite Renderer Sprite
+                            with a different texture! Also make sure to enable Is Trigger in the Box Collider 2D
+                            component. Also, add a FlappyController Script (C#). We will code it later, but make not of
+                            these variables we can change (Force, Up Rotation, Down Rotation).</p>
+                        <img src="img/flappy/bird1.png">
+                        <img src="img/flappy/bird2.png">
+                        <h4>Pipes</h4>
+                        <p>For each pipe, add a Rigidbody2D component and Box Collider 2D component. Make sure to make
+                            the Box Collider 2D a trigger! In the top and bottom pipe child game objects, add a "Death"
+                            tag to them!</p>
+                        <img src="img/flappy/pipe1.png">
+                        <img src="img/flappy/pipe2.png">
+                        <h4>Cycle Completion Collider</h4>
+                        <p>Add a "Completed" tag to the Cycle Completion Collider, and a Box Collider 2D. Position them
+                            as in the image!</p>
+                        <img src="img/flappy/ccc.png">
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section id="code-walkthrough">
             <div class="container">
                 <div class="row">
@@ -109,6 +160,7 @@
                     </div>
 
                     <div class="row">
+                        <h2>FlappyController.cs</h2>
                         <p>We create a class FlappyController that extends from the Unity MonoBehaviour class. This
                             allows us
                             to connect the script to our Flappy Bird character sprite and its other components.</p>
@@ -167,7 +219,7 @@ public Vector3 downRotation = new Vector3(0, 0, -35);</code></pre>
     transform.rotation = Quaternion.Euler(upRotation);
 }</code></pre>
                         </p>
-                        <p>Finally, we want the bird's rotation to also change every frame, so we use another math
+                        <p>Next, we want the bird's rotation to also change every frame, so we use another math
                             function: smooth interpolation (You do not need to worry about the implementation details)!
                         </p>
                         <pre><code class="language-csharp">void Update()
@@ -188,6 +240,27 @@ public Vector3 downRotation = new Vector3(0, 0, -35);</code></pre>
                         <p>Again do not worry about understanding Quaternions. Just know that they represent a 3D
                             rotation. This is a very complicated university math
                             topic!</p>
+
+                        <h4>Collisions</h4>
+                        <p>Finally, we want to check for collisions with the pipes and the ground and ceiling. Using the
+                            Unity UI, we added BoxCollider2D components to all the pipes, and labeled them as as
+                            triggers
+                            with the "Death" tag. So when the bird detects a collision, all we need to do is check if
+                            the tag is "Death!" When the trigger first "enters" or detects a collision, it calls
+                        <pre><code class="language-csharp">private void OnTriggerEnter2D(Collider2D other) { /* code */ }</code></pre>
+                        If the other Collider2D has the "Death" tag, we can reload the game by reloading the scene as
+                        shown below.
+                        </p>
+                        <pre><code class="language-csharp">private void OnTriggerEnter2D(Collider2D other)
+{
+    if (other.CompareTag("Death"))
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+}</code></pre>
+                        <p>Make sure to add
+                        <pre><code class="language-csharp">using UnityEngine.SceneManagement;</code></pre> in the
+                        beginning of the file.</p>
                     </div>
 
                     <div class="row">
@@ -196,6 +269,7 @@ public Vector3 downRotation = new Vector3(0, 0, -35);</code></pre>
                         <pre><code class="language-csharp">using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class FlappyController : MonoBehaviour
 {
@@ -220,10 +294,100 @@ public class FlappyController : MonoBehaviour
         
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(downRotation), Time.deltaTime * 2);
     }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Death"))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+    }
+}</code></pre>
+                    </div>
+
+                    <div class="row">
+                        <h2>PipeLogic.cs</h2>
+                        <h4>Instance Fields</h4>
+                        <p>First, we create 3 fields, a Rigidbody2D rb, and 2 public fields randPosY and speed. randPosY
+                            gives a range for the minimum and maximum of randomly generated pipe height. Speed controls
+                            the pipe speed going left.</p>
+                        <pre><code class="language-csharp">using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+                                                        
+public class PipeLogic : MonoBehaviour
+{
+    Rigidbody2D rb;
+    public float randPosY = 2.17f;
+    public float speed;</code></pre>
+                        <h4>Start and Update</h4>
+                        <p>In the Start() method, we obtain the rb component, and set the new position changing the y
+                            value only. Next in the update, we ensure that the Rigidbody2D component's velocity is
+                            always left at the speed specified by our public "speed" field. This makes our pipe move
+                            left!</p>
+                        <pre><code class="language-csharp">void Start()
+{
+    rb = this.gameObject.GetComponent<Rigidbody2D>();
+    transform.position = new Vector3(transform.position.x, Random.Range(randPosY, -randPosY));
+}
+                                                    
+void Update()
+{
+    rb.velocity = Vector2.left * speed;
+}</code></pre>
+                        <h4>"Destroying" the Pipe</h4>
+                        <p>When the pipe reaches the end of the screen, we could destroy it and create a new pipe.
+                            However, this could be risky because controlling large amounts of objects can cause memory
+                            leaks or be very inefficient. So a solution, is to <em>reuse</em> the pipe.</p>
+                        <p>All we do is detect if it passes the screen or hits the "Cycle Completion Collider" by
+                            checking if it hits the "Completed" tag!</p>
+                        <p>If this happens, we can reset it to an arbitray value, in our case, 9.28 seems to work well,
+                            but feel free to play around with the values!</p>
+                        <pre><code class="language-csharp">private void OnTriggerEnter2D(Collider2D other)
+{
+    if (other.CompareTag("Completed"))
+    {
+        transform.position = new Vector3(9.28f, Random.Range(randPosY, -randPosY));
+    }
+}</code></pre>
+                    </div>
+
+                    <div class="row">
+                        <p>Here's the final code in case you need it!</p>
+                        <h4>PipeLogic.cs</h4>
+                        <pre><code class="language-csharp">using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+                            
+public class PipeLogic : MonoBehaviour
+{
+    Rigidbody2D rb;
+    public float randPosY = 2.17f;
+    public float speed;
+                            
+    void Start()
+    {
+        rb = this.gameObject.GetComponent&lt;Rigidbody2D&gt;();
+        transform.position = new Vector3(transform.position.x, Random.Range(randPosY, -randPosY));
+    }
+                            
+    void Update()
+    {
+        rb.velocity = Vector2.left * speed;
+    }
+                            
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Completed"))
+        {
+            transform.position = new Vector3(9.28f, Random.Range(randPosY, -randPosY));
+        }
+    }
 }</code></pre>
                     </div>
                 </div>
         </section>
+
     </main>
     <!-- end team section -->
 
