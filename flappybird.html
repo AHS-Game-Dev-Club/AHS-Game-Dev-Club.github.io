@@ -124,11 +124,14 @@
                             flappy bird player goes out of bounds. Make sure to add the "Death" tag to the Box Collider
                             2D
                             component.</p>
-                        <p>There are 3 Pipes which have 2 child pipes, the top and bottom one, also with the "Death"
-                            tag. Finally, the Cycle Completion Collider detects if the pipes have passed the screen on
+                        <p>There are 3 Pipes which have 3 child elements, the top and bottom one, also with the "Death"
+                            tag, and the ScoreCollider. Next, the Cycle Completion Collider detects if the pipes have
+                            passed the screen on
                             the left and
-                            respawn to their original point.</p>
+                            respawn to their original point. Finally, add a canvas element on which add a Text (TMP)
+                            element.</p>
                         <img src="img/flappy/flappy_scene_hierarchy.png">
+                        <img src="img/flappy/tmp_hierarchy.png">
                         <h4>Player</h4>
                         <p>Here is the Inspector panel for the Player. Make sure to change the Sprite Renderer Sprite
                             with a different texture! Also make sure to enable Is Trigger in the Box Collider 2D
@@ -140,12 +143,21 @@
                         <p>For each pipe, add a Rigidbody2D component and Box Collider 2D component. Make sure to make
                             the Box Collider 2D a trigger! In the top and bottom pipe child game objects, add a "Death"
                             tag to them!</p>
+                        <p>Make sure to add a ScoreCollider element to each pipe, and connect the ScoreCollider script
+                            to it.</p>
                         <img src="img/flappy/pipe1.png">
                         <img src="img/flappy/pipe2.png">
+                        <h4>ScoreCollider Preview</h4>
+                        <img src="img/flappy/score_collider.png">
                         <h4>Cycle Completion Collider</h4>
                         <p>Add a "Completed" tag to the Cycle Completion Collider, and a Box Collider 2D. Position them
                             as in the image!</p>
                         <img src="img/flappy/ccc.png">
+                        <h4>Text Mesh Pro and UI</h4>
+                        <p>Select a Text Mesh Pro element as below!</p>
+                        <img src="img/flappy/tmp.png">
+                        <p>Here is the Canvas Inspector!</p>
+                        <img src="img/flappy/canvas.png">
                     </div>
                 </div>
             </div>
@@ -241,35 +253,13 @@ public Vector3 downRotation = new Vector3(0, 0, -35);</code></pre>
                             rotation. This is a very complicated university math
                             topic!</p>
 
-                        <h4>Collisions</h4>
-                        <p>Finally, we want to check for collisions with the pipes and the ground and ceiling. Using the
-                            Unity UI, we added BoxCollider2D components to all the pipes, and labeled them as as
-                            triggers
-                            with the "Death" tag. So when the bird detects a collision, all we need to do is check if
-                            the tag is "Death!" When the trigger first "enters" or detects a collision, it calls
-                        <pre><code class="language-csharp">private void OnTriggerEnter2D(Collider2D other) { /* code */ }</code></pre>
-                        If the other Collider2D has the "Death" tag, we can reload the game by reloading the scene as
-                        shown below.
-                        </p>
-                        <pre><code class="language-csharp">private void OnTriggerEnter2D(Collider2D other)
-{
-    if (other.CompareTag("Death"))
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
-}</code></pre>
-                        <p>Make sure to add
-                        <pre><code class="language-csharp">using UnityEngine.SceneManagement;</code></pre> in the
-                        beginning of the file.</p>
                     </div>
-
                     <div class="row">
                         <p>Here's the final code in case you need it!</p>
                         <h4>FlappyController.cs</h4>
                         <pre><code class="language-csharp">using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class FlappyController : MonoBehaviour
 {
@@ -294,12 +284,58 @@ public class FlappyController : MonoBehaviour
         
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(downRotation), Time.deltaTime * 2);
     }
+}</code></pre>
+                    </div>
+                    <div>
+                        <h2>PlayerHealth.cs</h2>
+                        <h4>Collisions With the "Death" and "Score" Tags</h4>
+                        <p>Using the
+                            Unity UI, we added BoxCollider2D components to all the pipes, and labeled them as as
+                            triggers
+                            with the "Death" tag. So when the bird detects a collision, all we need to do is check if
+                            the tag is "Death"! When the trigger first "enters" or detects a collision, it calls
+                        <pre><code class="language-csharp">private void OnTriggerEnter2D(Collider2D other) { /* code */ }</code></pre>
+                        If the other Collider2D has the "Death" tag, we can reload the game by reloading the scene as
+                        shown below. If the bird detects the "Score" tag, we can also add a point to a global score
+                        attribute.
+                        </p>
+                        <pre><code class="language-csharp">private void OnTriggerEnter2D(Collider2D other)
+{
+    if (other.CompareTag("Death"))
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+    if (other.CompareTag("Score"))
+    {
+        score += 1;
+    }
+}</code></pre>
+                        <p>Make sure to add
+                        <pre><code class="language-csharp">using UnityEngine.SceneManagement;</code></pre> in the
+                        beginning of the file.</p>
+                    </div>
 
+                    <div class="row">
+                        <p>Here's the final code in case you need it!</p>
+                        <h4>PlayerHealth.cs</h4>
+                        <pre><code class="language-csharp">using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class PlayyerHealth : MonoBehaviour
+{
+    public int score;
+                            
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Death"))
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+        if (other.CompareTag("Score"))
+        {
+            score += 1;
         }
     }
 }</code></pre>
@@ -382,6 +418,64 @@ public class PipeLogic : MonoBehaviour
         {
             transform.position = new Vector3(9.28f, Random.Range(randPosY, -randPosY));
         }
+    }
+}</code></pre>
+                    </div>
+                    <div class="row">
+                        <h2>ScoreTracker.cs</h2>
+                        <h4>Instance Fields</h4>
+                        <p>First, we create 2 fields: a PlayerHealth pH and TextMeshProUGUI scoreText.</p>
+                        <pre><code class="language-csharp">using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using TMPro;
+                                                        
+public class ScoreTracker : MonoBehaviour
+{
+    PlayerHealth pH;
+    TextMeshProUGUI scoreText;
+    </code></pre>
+                        <h4>Start and Update</h4>
+                        <p>In the Start() method, we set pH as the PlayerHealth script using
+                            FindObjectOfType&lt;PlayerHealth&gt;() and scoreText by calling the
+                            GetComponent&lt;TextMeshProUGUI&gt;() method. To update the score, we just set the score
+                            each frame in the Update() method.
+                        </p>
+                        <pre><code class="language-csharp">private void Start()
+{
+    pH = FindObjectOfType&lt;PlayerHealth&gt;();
+    scoreText = GetComponent&lt;TextMeshProUGUI&gt;();
+}
+                                                    
+void Update()
+{
+    scoreText.text = pH.score.ToString("0");
+}</code></pre>
+
+                    </div>
+
+                    <div class="row">
+                        <p>Here's the final code in case you need it!</p>
+                        <h4>ScoreTracker.cs</h4>
+                        <pre><code class="language-csharp">using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using TMPro;
+                                                        
+public class ScoreTracker : MonoBehaviour
+{
+    PlayerHealth pH;
+    TextMeshProUGUI scoreText;
+    
+    private void Start()
+    {
+        pH = FindObjectOfType&lt;PlayerHealth&gt;();
+        scoreText = GetComponent&lt;TextMeshProUGUI&gt;();
+    }
+
+    void Update()
+    {
+        scoreText.text = pH.score.ToString("0");
     }
 }</code></pre>
                     </div>
