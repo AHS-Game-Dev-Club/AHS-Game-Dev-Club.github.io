@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+
+<head>
+    <!-- meta character set -->
+    <meta charset="utf-8">
+    <!-- Always force latest IE rendering engine or request Chrome Frame -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>AHS Game Development Club</title>
+    <!-- Meta Description -->
+    <meta name="description" content="Blue One Page Creative HTML5 Template">
+    <meta name="keywords"
+        content="one page, single page, onepage, responsive, parallax, creative, business, html5, css3, css3 animation">
+    <meta name="author" content="Muhammad Morshed">
+
+    <!-- Mobile Specific Meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSS
+		================================================== -->
+
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
+
+    <!-- Fontawesome Icon font -->
+    <!-- <link rel="stylesheet" href="css/font-awesome.min.css"> -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <!-- add prism.css-->
+    <link rel="stylesheet" href="css/prism.css">
+
+
+    <!-- bootstrap.min -->
+    <link rel="stylesheet" href="css/jquery.fancybox.css">
+    <!-- bootstrap.min -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- bootstrap.min -->
+    <link rel="stylesheet" href="css/owl.carousel.css">
+    <!-- bootstrap.min -->
+    <link rel="stylesheet" href="css/slit-slider.css">
+    <!-- bootstrap.min -->
+    <link rel="stylesheet" href="css/animate.css">
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/custom.css">
+
+    <!-- Modernizer Script for old Browsers -->
+    <script src="js/modernizr-2.6.2.min.js"></script>
+
+    <script src="js/prism.js"></script>
+    <style>
+    p {
+        text-align: left;
+        margin: 10px 0;
+    }
+    img {
+        display: block;
+        margin: auto;
+    }
+    </style>
+
+</head>
+
+<body id="body">
+
+    <!-- preloader -->
+    <div id="preloader">
+        <div class="loder-box">
+            <div class="battery"></div>
+        </div>
+    </div>
+    <!-- end preloader -->
+    <!--
+        Fixed Navigation
+        ==================================== -->
+    <header id="navigation" class="navbar-inverse navbar-fixed-top animated-header">
+        <div class="container">
+            <div class="navbar-header">
+                <!-- responsive nav button -->
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <!-- /responsive nav button -->
+                <!-- logo -->
+                <h1 class="navbar-brand">
+                    <a href="#body">AHS Game Dev Club</a>
+                </h1>
+                <!-- /logo -->
+            </div>
+
+            <!-- main nav -->
+            <nav class="collapse navbar-collapse navbar-right" role="navigation">
+                <ul id="" class="nav navbar-nav">
+                    <li><a href="./index.html">Home</a></li>
+                    <li><a href="./lessons.html#csharp">C#</a></li>
+                    <li><a href="./lessons.html#unity-editor">Let's Make Flappy Bird</a></li>
+                    <li><a href="#platformer">Let's Make a Platformer</a></li>
+                    <li><a href="#graphics">Graphics</a></li>
+                </ul>
+            </nav>
+            <!-- /main nav -->
+        </div>
+    </header>
+    <!--
+        End Fixed Navigation
+        ==================================== -->
+
+    <main class="site-content" role="main">
+
+        <section>
+            <div class="container">
+                <div class="row" style="text-align: left;">
+                    <div class="sec-title text-center">
+                        <h2 class="wow animated bounceInLeft">How Do Computers Render?</h2>
+                        <p>A computer is just an array of pixels (or a small square that holds a single color). For example, an array of 1280 pixels wide by 720 pixels tall would make 921,600 individual pixels that each store a color!
+                        </p>
+                        <img src="https://play-lh.googleusercontent.com/NAN3DMyKo41Cve2k4WTF9UpBfFiVlA84uLfN3cAHbFipqFZP401SyD4Nup4ol1m1ng">
+                        <p>
+                        Color is typically represented by a <em>(Red, Green Blue)</em> component, and when working with images, it could also have a transparency component known as (Alpha) with 24 (RGB) or 32 (RGBA) bits. In both cases, 8 bits are used to store each component.
+                        </p>
+                        <p>So each component can be from 0 to 255! (i.e. Red = [255, 0, 0])
+                        </p>
+                    </div>
+                    <div class="row">
+                        <h2>Software Rendering</h2>
+                        <p>One method of drawing images to a screen is through software rendering. With this method, each pixel is individually set and calculated by the CPU. This means that all rotations, scaling, and translations, along with lighting, and other features need to be done pixel by pixel. As a result, software rendering is much less popular in the games industry because it is extremely slow due to the CPU. However, the <a href="https://www.pygame.org/news">PyGame</a> library uses it, and it works amazingly for small games!</p>
+                        <img width="500px" src="https://linuxhint.com/wp-content/uploads/2021/09/Design-Video-Games-Pygame-02.png">
+                        <p>In the past, games were made with software rendering such as Doom! The 3D calculations were done on each block and each pixel. Quite an impressive feat!</p>
+                        <img src="https://doomwiki.org/w/images/c/ca/DelphiDoom_True_Color_Software_Renderer_2.jpg">
+                    </div>
+                    <div class="row">
+                        <h2>Hardware Rendering</h2>
+                        <p>But now most complex applications use hardware for rendering! This utilizes the GPU and graphics drivers to do most of the heavy lifting.</p>
+                        <h4>Graphics APIs</h4>
+                        <p>Each computer and graphics driver is different, and thus the graphics driver manufacturer (i.e. NVIDIA) defines rendering to the screen. Regardless, they all use the same commands to draw objects to the screen. Most Windows computers use DirectX, Mac users use Metal, and APIs such as Vulkan and OpenGL are made to be cross-platform, meaning that they can run on most operating systems.</p>
+                        <img width="500px" src="data:image/png;base64,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">
+                        <h4>Vertex Buffers</h4>
+                        <p>The GPU also has memory, where you can store data, which can be positions, colors, texture coordinates, normals, etc.</p>
+                        <p>The first step in rendering is to tell the GPU what to draw. This is done by specifying data in buffers, and telling the GPU to use that buffer to render. A Vertex Buffer (VBO) stores each individual vertex to be drawn (position, color, texture coordinates, etc). A set of vertices can create a "primitive" shape that the GPU can draw. So for example, a triangle (the most used primitive) requires 3 vertices.</p>
+                        <h4>Meshes</h4>
+                        <p>Triangles are used to construct almost everything. For example, a rectangle can be constructed from 2 triangles next to each other! A cube needs 12 triangles (2 triangles per face x 6 faces)! A series of these primitives (almost always triangles) is known as a mesh, and it defines the shape. Check out these rabbit meshes with varying degrees of realism!</p>
+                        <img width="450px" src="http://learnwebgl.brown37.net/_images/triangle_mesh_quality.jpeg">
+                        <h4>Shaders</h4>
+                        <p>Unfortunately, rendering is more complicated than just that. The GPU itself does not know what to do with the data from the vertex buffers. Special programs called "Shaders" run on the GPU taking in that data, and telling the GPU what to do with it (i.e. drawing to the screen).</p>
+                        <p>Shaders can also take in "parameters" (uniforms in OpenGL) that can alter the output of the shader.</p>
+                        <h4>Vertex Shaders</h4>
+                        <p>Vertex shaders are relatively simple. They convert the vertices (usually position with other data) to screen coordinates which are usually -1 to 1 in both dimensions. Take a look at the example below.</p>
+                        <img src="https://libgdx.com/assets/wiki/images/normalizedcoordinates.png">
+                        <p>Depending on the screen resolution, the triangle will look differently, because the coordinates are normalized.</p>
+                        <h4>Fragment Shaders</h4>
+                        <p>Fragment shaders run per pixel on screen. They take in the interpolated output of the vertex shader (position & normals for lighting calculations, texture coordinates for textures, etc). Through lighting or any other calculations, the color of the pixel can be outputted, and the vertex will be drawn to the screen.</p>
+                        <h4>Textures & Texture Coordinates</h4>
+                        <p>To draw a texture (image) in 3D graphics, the texture must be first loaded from the CPU memory and stored in the GPU memory as a texture.</p>
+                        <p>In the Vertex Buffer, the coordinates of the texture must be specified per vertex. However the value must be normalized from (0-1), meaning that the top right pixel would be (1, 1) and the bottom left (0, 0) in OpenGL as seen below.</p>
+                        <img src="https://learnopengl.com/img/getting-started/tex_coords.png">
+                        <p>The fragment shader can be supplied with a handle to the texture in GPU memory, and using the interpolated texture coordinates, a pixel by pixel texture can be drawn.</p>
+                    </div>
+                    <div class="row">
+                        <h2>Rendering Techniques</h2>
+                        <h4>Batch Rendering</h4>
+                        <p>If the mesh type is the same (all textures, all cubes, all circles etc), it is much more efficient to render all of the meshes in 1 draw call than to render each of them individually. As a result, 1 large mesh (batch) is created to store all of the smaller meshes, and rendered each frame in 1 draw call! Extremely efficient for voxel engines (like Minecraft) or 2D games (all 2D textures)!</p>
+                        <h4>Cameras & Projections</h4>
+                        <p>At its core, graphics programming is just using math (matrices and vectors) to manipulate and render data on screen. Thus to represent a world, there are 2 types of projections: the simple 2D orthographic projection, and the 3D perspective projection.</p>
+                        <img width="500px" src="https://i.ytimg.com/vi/dUJzpz8J9xw/maxresdefault.jpg">
+                        <p>As in the image, the perspective projection draws things that are farther away smaller, while orthographic projections completely ignore depth and the 3D look.</p>
+                        <p>The camera position, and look at matrix must also be defined (Don't worry about this! This is linear algebra which you will likely encounter at university)! With all of this, a projection matrix is created (for orthographic vs perspective) and a view matrix is created (for camera positions, angles, etc)</p>
+                        <h4>VSync</h4>
+                        <p>Most computers have a fixed refresh rate (typically running at 60 frames / second), meaning that the game does not need to render at high FPS such as 100. Therefore, by enabling VSync, the game will by default synchronize with the video / screen at that fixed FPS.</p>
+                    </div>
+                    <div class="row">
+                        <h2>Final Thoughts</h2>
+                        <p>Graphics programming is a completely separate field from pure game programming. Yet, it can be extremely rewarding to see cool 3D lighting in scenes that you programmed from scratch!</p>
+                        <p>If you are ever interested in learning 3D graphics, OpenGL is highly recommend for beginners. This webiste <em><a href="https://learnopengl.com/">Learn OpenGL</a></em> does a marvelous job at teaching OpenGL and core graphics fundamentals, with projects and scenes that look extremely realistic!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    <!-- end team section -->
+
+    <footer id="footer">
+        <div class="container">
+            <div class="row text-center">
+                <div class="footer-content">
+
+                    <div class="footer-social">
+                        <ul>
+                            <!-- <li><a href="#"><i class="fa fa-facebook fa-3x"></i></a></li> -->
+                            <li><a href="https://www.instagram.com/ahsgamedevclub/" target="_blank"><i
+                                        class="fab fa-instagram fa-3x"></i></a></li>
+                            <li><a href="https://github.com/AHS-Game-Dev-Club/" target="_blank"><i
+                                        class="fab fa-github fa-3x"></i></a></li>
+                            <li><a href="https://discord.gg/kD2FZ74VPf" target="_blank"><i
+                                        class="fab fa-discord fa-3x"></i></a></li>
+                            <li><a href="https://www.youtube.com/@ahsgamedevclub" target="_blank"><i
+                                        class="fab fa-youtube fa-3x"></i></a></li>
+
+                        </ul>
+                    </div>
+
+                    <p>Copyright &copy; 2023 AHS Game Dev Club. All rights reserved</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Essential jQuery Plugins
+		================================================== -->
+    <!-- Main jQuery -->
+    <script src="js/jquery-1.11.1.min.js"></script>
+    <!-- Twitter Bootstrap -->
+    <script src="js/bootstrap.min.js"></script>
+    <!-- Single Page Nav -->
+    <script src="js/jquery.singlePageNav.min.js"></script>
+    <!-- jquery.fancybox.pack -->
+    <script src="js/jquery.fancybox.pack.js"></script>
+    <!-- Google Map API -->
+    <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
+    <!-- Owl Carousel -->
+    <script src="js/owl.carousel.min.js"></script>
+    <!-- jquery easing -->
+    <script src="js/jquery.easing.min.js"></script>
+    <!-- Fullscreen slider -->
+    <script src="js/jquery.slitslider.js"></script>
+    <script src="js/jquery.ba-cond.min.js"></script>
+    <!-- onscroll animation -->
+    <script src="js/wow.min.js"></script>
+    <!-- Custom Functions -->
+    <script src="js/main.js"></script>
+</body>
+
+</html>
