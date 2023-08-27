@@ -157,17 +157,17 @@
 }
 
 .bg-img-1 {
-	background-image: url(../img/slider/game_design_dev.jpg);
+	background-image: url(../img/slider/bg1.png);
 	filter: brightness(50%);
 }
 
 .bg-img-2 {
-	background-image: url(../img/slider/unity_game.png);
+	background-image: url(../img/slider/bg2.png);
 	filter: brightness(50%);
 }
 
 .bg-img-3 {
-	background-image: url(../img/slider/blender.jpg);
+	background-image: url(../img/slider/bg3.png);
 	filter: brightness(50%);
 }
 
